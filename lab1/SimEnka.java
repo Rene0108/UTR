@@ -47,7 +47,7 @@ public class SimEnka {
 	        
 	   	 // 6.redak --> Spremanje funkcije prijelaza (3 paralelne liste):     - trenutnaStanja
 	   	 //                                                                   - simboliAbecede
-	    	//                                                                   - iducaStanja
+	    	 //                                                                   - iducaStanja
 	    	String iterator = new String();	
 	    	while ((iterator = reader.readLine()) != null) {
 	    		String[] podjela = iterator.split("->");	    	
@@ -91,15 +91,15 @@ public class SimEnka {
             	
             			// Provjeri epsilon-prijelaze trenutnih stanja          	
         			while(true) {     
-        				for(int i = 0; i < trenutnaStanja.size(); i++) {                                                                         // Za svako stanje koje trenutno imamo
-        					for(int j = 0; j < stanjaDefiniranihPrijelaza.size(); j++) {  	                                                     // Prodi po listi stanja s definiranim prijelazima
-        						if(znakoviPrijelaza.get(j).equals("$") && trenutnaStanja.get(i).equals(stanjaDefiniranihPrijelaza.get(j))) {     // Ako u listi stanja s definiranim prijelazima postoji epsilon-prijelaz za ovo stanje
+        				for(int i = 0; i < trenutnaStanja.size(); i++) {                                                                              // Za svako stanje koje trenutno imamo
+        					for(int j = 0; j < stanjaDefiniranihPrijelaza.size(); j++) {  	                                                      // Prodi po listi stanja s definiranim prijelazima
+        						if(znakoviPrijelaza.get(j).equals("$") && trenutnaStanja.get(i).equals(stanjaDefiniranihPrijelaza.get(j))) {  // Ako u listi stanja s definiranim prijelazima postoji epsilon-prijelaz za ovo stanje
         						
         							// Dodaj stanje koje dobivamo epsilon-prijelazom ako ono vec nije u listi stanja koja trenutno imamo
         							String iduce = iducaStanja.get(j);             
         							if (!trenutnaStanja.contains(iduce)){
         								trenutnaStanja.add(iduce);
-        								continue; 				          // nastavi na sljedeci korak				
+        								continue; 	// nastavi na sljedeci korak				
         							}
         						}
         					}
@@ -114,9 +114,9 @@ public class SimEnka {
     				}
     			
     				// Dodavanje stanja u koja su definirani prijelazi u sljedecaStanja      
-    				for(int i = 0; i < trenutnaStanja.size(); i++) {												                                // Za svako stanje koje trenutno imamo		
-    					for(int j = 0; j < stanjaDefiniranihPrijelaza.size(); j++) {																// Prodi po listi stanja s definiranim prijelazima			
-    						if(znakoviPrijelaza.get(j).equals(simboli[k])  && trenutnaStanja.get(i).equals(stanjaDefiniranihPrijelaza.get(j))) {    // Ako postoji definirani prijelaz iz ovog stanja za trenutni simbol
+    				for(int i = 0; i < trenutnaStanja.size(); i++) {										       // Za svako stanje koje trenutno imamo		
+    					for(int j = 0; j < stanjaDefiniranihPrijelaza.size(); j++) {								       // Prodi po listi stanja s definiranim prijelazima			
+    						if(znakoviPrijelaza.get(j).equals(simboli[k])  && trenutnaStanja.get(i).equals(stanjaDefiniranihPrijelaza.get(j))) {   // Ako postoji definirani prijelaz iz ovog stanja za trenutni simbol
     							// U sljedecaStanja dodaj definirani prijelaz (ako ono vec nije prisutno)
     							String iduce = iducaStanja.get(j);             
     							if (!sljedecaStanja.contains(iduce)){
@@ -128,15 +128,15 @@ public class SimEnka {
         		
     				// Provjeri epsilon-prijelaze sljedecih stanja          	
             			while(true) {     
-            				for(int i = 0; i < sljedecaStanja.size(); i++) {                                                                         // Za svako stanje koje trenutno imamo
-            					for(int j = 0; j < stanjaDefiniranihPrijelaza.size(); j++) {  	                                                     // Prodi po listi stanja s definiranim prijelazima
-            						if(znakoviPrijelaza.get(j).equals("$") && sljedecaStanja.get(i).equals(stanjaDefiniranihPrijelaza.get(j))) {     // Ako u listi stanja s definiranim prijelazima postoji epsilon-prijelaz za ovo stanje
+            				for(int i = 0; i < sljedecaStanja.size(); i++) {                                                                              // Za svako stanje koje trenutno imamo
+            					for(int j = 0; j < stanjaDefiniranihPrijelaza.size(); j++) {  	                                                      // Prodi po listi stanja s definiranim prijelazima
+            						if(znakoviPrijelaza.get(j).equals("$") && sljedecaStanja.get(i).equals(stanjaDefiniranihPrijelaza.get(j))) {  // Ako u listi stanja s definiranim prijelazima postoji epsilon-prijelaz za ovo stanje
             						
             							// Dodaj stanje koje dobivamo epsilon-prijelazom ako ono vec nije u listi stanja koja trenutno imamo.
             							String iduca = iducaStanja.get(j);             
             							if (!sljedecaStanja.contains(iduca)){
             								sljedecaStanja.add(iduca);
-            								continue; 				          // nastavi na sljedeci korak				
+            								continue; 	// nastavi na sljedeci korak				
             							}
             						}
             					}
