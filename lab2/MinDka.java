@@ -50,160 +50,160 @@ public class MinDka {
 		//System.out.println("Prihvatljiva stanja:   " + prihvatljivaStanja.toString());
 		
 		// 4.redak --> pocetno stanje
-	    pocetnoStanje = reader.readLine();
-	    //System.out.println("Pocetno stanje:   " + pocetnoStanje.toString());
+	    	pocetnoStanje = reader.readLine();
+	    	//System.out.println("Pocetno stanje:   " + pocetnoStanje.toString());
 	        
-	    // 5.redak --> Spremanje prijelaza
-	    String linija = new String();	
-	    while ((linija = reader.readLine()) != null) {
-	    	String[] podjela = linija.split("->");
-	    	definiraniPrijelazi.put(podjela[0], podjela[1]);
-	    }
-	    //System.out.println("Prijelazi:   \n" + definiraniPrijelazi.toString() + "\n\n");
+	   	 // 5.redak --> Spremanje prijelaza
+	   	 String linija = new String();	
+	    	while ((linija = reader.readLine()) != null) {
+	    		String[] podjela = linija.split("->");
+	    		definiraniPrijelazi.put(podjela[0], podjela[1]);
+	    	}
+	   	 //System.out.println("Prijelazi:   \n" + definiraniPrijelazi.toString() + "\n\n");
 	    
 	    
-	    // TRAZENJE I UKLANJANJE NEDOSTIZNIH STANJA
-	    for(String stanje : skupStanja) {
-	    	nedostiznaStanja.add(stanje);
-	    }
-	    //System.out.println("U nedostizna stanja stavi sva stanja:   " + nedostiznaStanja.toString());
+	    	// TRAZENJE I UKLANJANJE NEDOSTIZNIH STANJA
+	    	for(String stanje : skupStanja) {
+	    		nedostiznaStanja.add(stanje);
+	    	}
+	    	//System.out.println("U nedostizna stanja stavi sva stanja:   " + nedostiznaStanja.toString());
 	    
-	    TreeSet<String> dohvatljiva = new TreeSet<String>();
-	    dohvatljiva.add(pocetnoStanje);
+	    	TreeSet<String> dohvatljiva = new TreeSet<String>();
+	    	dohvatljiva.add(pocetnoStanje);
 	    
-	    TreeSet<String> trenutno = new TreeSet<String>();
-	    trenutno.add(pocetnoStanje);
+	    	TreeSet<String> trenutno = new TreeSet<String>();
+	    	trenutno.add(pocetnoStanje);
 	    
-	    while(trenutno.size() > 0) {
-	    	TreeSet<String> pomoc = new TreeSet<String>();
-	    	for (@SuppressWarnings("unused") String stanje : trenutno) {
-	    		for(Entry<String, String> entry : definiraniPrijelazi.entrySet()) {
-	    			String[] podjela = entry.getKey().split(",");
-	    			if(trenutno.contains(podjela[0]) && !(dohvatljiva.contains(entry.getValue()))) {
-	    				pomoc.add(entry.getValue());
-	    				dohvatljiva.add(entry.getValue());
+	   	 while(trenutno.size() > 0) {
+	    		TreeSet<String> pomoc = new TreeSet<String>();
+	    		for (@SuppressWarnings("unused") String stanje : trenutno) {
+	    			for(Entry<String, String> entry : definiraniPrijelazi.entrySet()) {
+	    				String[] podjela = entry.getKey().split(",");
+	    				if(trenutno.contains(podjela[0]) && !(dohvatljiva.contains(entry.getValue()))) {
+	    					pomoc.add(entry.getValue());
+	    					dohvatljiva.add(entry.getValue());
+	    				}
 	    			}
 	    		}
+	    		trenutno.clear();
+	    		trenutno.addAll(pomoc);
 	    	}
-	    	trenutno.clear();
-	    	trenutno.addAll(pomoc);
-	    }
 	    
-	    for(String stanje : dohvatljiva) {
-	    	if(nedostiznaStanja.contains(stanje)) {
-	    		nedostiznaStanja.remove(stanje);
+	    	for(String stanje : dohvatljiva) {
+	    		if(nedostiznaStanja.contains(stanje)) {
+	    			nedostiznaStanja.remove(stanje);
+	    		}
+	    	}	    
+	    	for(String stanje : nedostiznaStanja) {
+	    		if(prihvatljivaStanja.contains(stanje)) {
+	    			prihvatljivaStanja.remove(stanje);
+	    		}
+	    		if(skupStanja.contains(stanje)) {
+	    			skupStanja.remove(stanje);
+	    		}
 	    	}
-	    }	    
-	    for(String stanje : nedostiznaStanja) {
-	    	if(prihvatljivaStanja.contains(stanje)) {
-	    		prihvatljivaStanja.remove(stanje);
-	    	}
-	    	if(skupStanja.contains(stanje)) {
-	    		skupStanja.remove(stanje);
-	    	}
-	    }
-	    //System.out.println("Nedostizna stanja:   " + nedostiznaStanja.toString());
-	    //System.out.println("Nedostizna stanja size:   " + nedostiznaStanja.size());
+	    	//System.out.println("Nedostizna stanja:   " + nedostiznaStanja.toString());
+	    	//System.out.println("Nedostizna stanja size:   " + nedostiznaStanja.size());
 
-	    Map<String, String> prijelaziNovo = new TreeMap<>();
-	    for(Map.Entry<String, String> entry : definiraniPrijelazi.entrySet()) {
+	   	 Map<String, String> prijelaziNovo = new TreeMap<>();
+	    	 for(Map.Entry<String, String> entry : definiraniPrijelazi.entrySet()) {
 			String[] podjela = entry.getKey().split(",");
 			if(!(nedostiznaStanja.contains(podjela[0])) && !(nedostiznaStanja.contains(entry.getValue()))) {
 				prijelaziNovo.put(entry.getKey(), entry.getValue());
 			}
 		}
-	    //System.out.println("Skup stanja:   " + skupStanja.toString());
-	    //System.out.println("Simboli abecede:   " + simboliAbecede.toString());
-	    //System.out.println("Prihvatljiva stanja:   " + prihvatljivaStanja.toString());
-	    //System.out.println("Prijelazi:   \n" + prijelaziNovo.toString() + "\n\n");
+	    	//System.out.println("Skup stanja:   " + skupStanja.toString());
+	    	//System.out.println("Simboli abecede:   " + simboliAbecede.toString());
+	    	//System.out.println("Prihvatljiva stanja:   " + prihvatljivaStanja.toString());
+	    	//System.out.println("Prijelazi:   \n" + prijelaziNovo.toString() + "\n\n");
 	    
 	    
-	    // Stvaranje matrice i inicijalizacija svih elemenata na 'false'
-	    List<ParoviStanja> paroviStanja = new ArrayList<ParoviStanja>();
-	    String[] stanja = skupStanja.toArray( new String[skupStanja.size()] );
+	    	// Stvaranje matrice i inicijalizacija svih elemenata na 'false'
+	    	List<ParoviStanja> paroviStanja = new ArrayList<ParoviStanja>();
+	    	String[] stanja = skupStanja.toArray( new String[skupStanja.size()] );
 	    
 
-	    for(int i = 0; i < stanja.length; i++) {
-	    	for(int j = 0; j < stanja.length; j++) {
-	    		ParoviStanja noviPar = new ParoviStanja(stanja[i], stanja[j]);
-	    		paroviStanja.add(noviPar);
-	    	}
-	    }
-	    for(ParoviStanja par : paroviStanja) {
-	    	matrica.put(par, false);
-		}
-	    //System.out.println(paroviStanja.toString());
-	    
-	    // Oznacavanje neistovjetnih parova stanja
-	    for(int i = 0; i < stanja.length; i++) {
-	    	for(int j = 0; j < i; j++) {
-	    		ParoviStanja par = paroviStanja.get(i * (stanja.length) + j);
-	    		if ( (!(prihvatljivaStanja.contains(par.x)) && prihvatljivaStanja.contains(par.y)) ||
-	    				(prihvatljivaStanja.contains(par.x) && !(prihvatljivaStanja.contains(par.y)))) {
-	    		} else {
-	    			matrica.replace(par, true);
+	    	for(int i = 0; i < stanja.length; i++) {
+	    		for(int j = 0; j < stanja.length; j++) {
+	    			ParoviStanja noviPar = new ParoviStanja(stanja[i], stanja[j]);
+	    			paroviStanja.add(noviPar);
 	    		}
 	    	}
-	    }
-	    // KONTROLA MATRICE
-	    /*for(int i = 0; i < stanja.length; i++) {
+	    	for(ParoviStanja par : paroviStanja) {
+	    		matrica.put(par, false);
+		}
+	    	//System.out.println(paroviStanja.toString());
+	    
+	    	// Oznacavanje neistovjetnih parova stanja
+	   	for(int i = 0; i < stanja.length; i++) {
+	    		for(int j = 0; j < i; j++) {
+	    			ParoviStanja par = paroviStanja.get(i * (stanja.length) + j);
+	    			if ( (!(prihvatljivaStanja.contains(par.x)) && prihvatljivaStanja.contains(par.y)) ||
+	    			     (prihvatljivaStanja.contains(par.x) && !(prihvatljivaStanja.contains(par.y)))) {
+	    			} else {
+	    				matrica.replace(par, true);
+	    			}
+	    		}
+	    	}
+	    	// KONTROLA MATRICE
+	    	/*for(int i = 0; i < stanja.length; i++) {
 	    	for(int j = 0; j < i; j++) {
 	    		ParoviStanja par = paroviStanja.get(i * (stanja.length) + j);
 	    		System.out.print("[" + par.x +", " + par.y + "]  ");
 	    	}
 	    	System.out.println("\n");
-	    }*/
-	    // KONTROLA oznacenosti
-	    /*for(int i = 0; i < stanja.length; i++) {
+	    	}*/
+	    	// KONTROLA oznacenosti
+	    	/*for(int i = 0; i < stanja.length; i++) {
 	    	for(int j = 0; j < i; j++) {
 	    		ParoviStanja par = paroviStanja.get(i * (stanja.length) + j);
 	    		System.out.print("[" + matrica.get(par) + "]  ");
 	    	}
 	    	System.out.println("\n");
-	    }*/
+	   	 }*/
 	    
-	    //Daljnji algoritam
-	    for(int i = 0; i < stanja.length; i++) {
-	    	for(int j = 0; j < i; j++) {
-	    		ParoviStanja par = paroviStanja.get(i * (stanja.length) + j);
-	    		if(matrica.get(par) == true) {
-	    			//System.out.println(par.toString());
-	    			boolean ostaje = true;
-	    			for(String simbol : simboliAbecede) {
-	    				String kljuc1 = par.x + "," + simbol;
-	    				String kljuc2 = par.y + "," + simbol;
-	    				String sljedece1 = prijelaziNovo.get(kljuc1);
-	    				String sljedece2 = prijelaziNovo.get(kljuc2);
-	    				if((prihvatljivaStanja.contains(sljedece1) && !(prihvatljivaStanja.contains(sljedece2))) ||
-	    					(!(prihvatljivaStanja.contains(sljedece1)) && (prihvatljivaStanja.contains(sljedece2)))) {
-	    					matrica.replace(par, false);
-	    					ostaje = false;
-	    					provjeriListu(par);
-	    					break;
-	    				} 
-	    			}
-	    			if(ostaje) {
+	    	//Daljnji algoritam
+	    	for(int i = 0; i < stanja.length; i++) {
+	    		for(int j = 0; j < i; j++) {
+	    			ParoviStanja par = paroviStanja.get(i * (stanja.length) + j);
+	    			if(matrica.get(par) == true) {
+	    				//System.out.println(par.toString());
+	    				boolean ostaje = true;
 	    				for(String simbol : simboliAbecede) {
-		    				String kljuc1 = par.x + "," + simbol;
-		    				String kljuc2 = par.y + "," + simbol;
-		    				String sljedece1 = prijelaziNovo.get(kljuc1);
-		    				String sljedece2 = prijelaziNovo.get(kljuc2);
-		    				if(sljedece1 != sljedece2) {
-		    					ParoviStanja noviPar = new ParoviStanja(sljedece1, sljedece2);
-			    				if(mapaSaListama.get(noviPar) == null) {
-			    					List<ParoviStanja> lista = new ArrayList<>();
-			    					lista.add(par);
-			    					mapaSaListama.put(noviPar, lista);
-			    				} else {
-			    					List<ParoviStanja> lista = mapaSaListama.get(noviPar);
-			    					lista.add(par);
-			    					mapaSaListama.replace(noviPar, lista);
-			    				}
+	    					String kljuc1 = par.x + "," + simbol;
+	    					String kljuc2 = par.y + "," + simbol;
+	    					String sljedece1 = prijelaziNovo.get(kljuc1);
+	    					String sljedece2 = prijelaziNovo.get(kljuc2);
+	    					if((prihvatljivaStanja.contains(sljedece1) && !(prihvatljivaStanja.contains(sljedece2))) ||
+	    					   (!(prihvatljivaStanja.contains(sljedece1)) && (prihvatljivaStanja.contains(sljedece2)))) {
+	    						matrica.replace(par, false);
+	    						ostaje = false;
+	    						provjeriListu(par);
+	    						break;
+	    					} 
+	    				}
+	    				if(ostaje) {
+	    					for(String simbol : simboliAbecede) {
+		    					String kljuc1 = par.x + "," + simbol;
+		    					String kljuc2 = par.y + "," + simbol;
+		    					String sljedece1 = prijelaziNovo.get(kljuc1);
+		    					String sljedece2 = prijelaziNovo.get(kljuc2);
+		    					if(sljedece1 != sljedece2) {
+		    						ParoviStanja noviPar = new ParoviStanja(sljedece1, sljedece2);
+			    					if(mapaSaListama.get(noviPar) == null) {
+			    						List<ParoviStanja> lista = new ArrayList<>();
+			    						lista.add(par);
+			    						mapaSaListama.put(noviPar, lista);
+			    					} else {
+			    						List<ParoviStanja> lista = mapaSaListama.get(noviPar);
+			    						lista.add(par);
+			    						mapaSaListama.replace(noviPar, lista);
+			    					}
+		    					}
 		    				}
-		    			}
+	    				}
 	    			}
 	    		}
-	    	}
 	    }
 	    
 	    // Sortiranje stanja unutar istovjetnih stanja
@@ -251,7 +251,7 @@ public class MinDka {
 	    			prijelaziNovo.remove(string);
 	    		}
 
-			}
+		}
 	    	for(Entry<String, String> entry : prijelaziNovo.entrySet()) {
 				if (entry.getValue().contentEquals(par.y)) {
 					entry.setValue(par.x);
@@ -259,47 +259,47 @@ public class MinDka {
 			}
 		}
 
-	    // ISPIS
-	    String ispis = new String();
-	    for(String stanje : skupStanja) {
-	    	ispis = ispis + stanje + ",";
-	    }
-	    ispis = ispis.substring(0, ispis.length() - 1);
-	    ispis += "\n";
-	    for(String simbol : simboliAbecede) {
-	    	ispis = ispis + simbol + ",";
-	    }
-	    ispis = ispis.substring(0, ispis.length() - 1);
-	    ispis += "\n";
-	    for(String stanje : prihvatljivaStanja) {
-	    	ispis = ispis + stanje + ",";
-	    }
-	    if(prihvatljivaStanja.size() == 0) ispis += "\n";
-	    ispis = ispis.substring(0, ispis.length() - 1);
-	    ispis += "\n";
-	    ispis += pocetnoStanje;
-	    ispis += "\n";
-	    for(Map.Entry<String, String> entry : prijelaziNovo.entrySet()) {
-    		ispis = ispis + entry.getKey() + "->" + entry.getValue() + "\n";
+	    	// ISPIS
+	    	String ispis = new String();
+	    	for(String stanje : skupStanja) {
+	    		ispis = ispis + stanje + ",";
+	    	}
+	    	ispis = ispis.substring(0, ispis.length() - 1);
+	    	ispis += "\n";
+	    	for(String simbol : simboliAbecede) {
+	    		ispis = ispis + simbol + ",";
+	    	}
+	   	ispis = ispis.substring(0, ispis.length() - 1);
+	    	ispis += "\n";
+	    	for(String stanje : prihvatljivaStanja) {
+	    		ispis = ispis + stanje + ",";
+	    	}
+	    	if(prihvatljivaStanja.size() == 0) ispis += "\n";
+	    	ispis = ispis.substring(0, ispis.length() - 1);
+	    	ispis += "\n";
+	    	ispis += pocetnoStanje;
+	    	ispis += "\n";
+	    	for(Map.Entry<String, String> entry : prijelaziNovo.entrySet()) {
+    			ispis = ispis + entry.getKey() + "->" + entry.getValue() + "\n";
 		}
 	    
-	    System.out.print(ispis);
+	    	System.out.print(ispis);
 	    
-	    reader.close();
+	   	 reader.close();
 	    
 	}
 	
 	public static void provjeriListu(ParoviStanja par) {
-    	if(mapaSaListama.get(par) == null) {
-    		return;
-    	} else {
-    		List<ParoviStanja> lista = mapaSaListama.get(par);
-    		for(ParoviStanja iterator : lista) {
-    			matrica.replace(iterator, false);
-    			provjeriListu(iterator);
+    		if(mapaSaListama.get(par) == null) {
+    			return;
+    		} else {
+    			List<ParoviStanja> lista = mapaSaListama.get(par);
+    			for(ParoviStanja iterator : lista) {
+    				matrica.replace(iterator, false);
+    				provjeriListu(iterator);
+    			}
     		}
     	}
-    }
 
 }
 
@@ -315,14 +315,9 @@ class ParoviStanja {
         this.x = x;
         this.y = y;
     }
-    
-    public ParoviStanja() {
-		// TODO Auto-generated constructor stub
-	}
 
-	@Override
-    public boolean equals(Object o)
-    {
+    @Override
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -344,8 +339,7 @@ class ParoviStanja {
     }
  
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result = x != null ? x.hashCode() : 0;
         result = 31 * result + (y != null ? y.hashCode() : 0);
         return result;
